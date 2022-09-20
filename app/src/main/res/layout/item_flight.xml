@@ -3,6 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="segment"
+            type="com.example.flightapplication.model.entity.Segment" />
+
+        <variable
+            name="departure"
+            type="com.example.flightapplication.model.entity.Departure" />
+
+        <variable
+            name="baggageInfo"
+            type="com.example.flightapplication.model.entity.BaggageInfo" />
+
+    </data>
 
 
     <androidx.cardview.widget.CardView
@@ -29,12 +43,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/airline_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
             tools:src="@drawable/ic_arrow_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/airline_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
@@ -60,6 +76,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{segment.origin}"
                 android:padding="6dp"
                 tools:text="SAW" />
 
@@ -74,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
+                android:text="@{segment.destination}"
                 tools:text="AMS" />
 
 
@@ -90,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
+                android:text="@{segment.departureDatetime.time}"
                 tools:text="08:40" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -103,6 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
+                android:text="@{segment.arrivalDatetime.time}"
                 tools:text="11:30" />
 
 
@@ -113,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.33"
+            android:text="@{departure.priceBreakdown.price()}"
             android:drawableEnd="@drawable/ic_arrow_forward"
             tools:text="1.4449,99 TL" />
 
@@ -162,6 +183,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="El Bagajı"
+            android:text="@{baggageInfo.getWeight()}"
             android:drawableStart="@drawable/ic_luggage"
             android:drawablePadding="6dp"
             />
