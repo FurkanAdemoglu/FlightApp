@@ -1,11 +1,17 @@
 package com.example.flightapplication.ui.list
 
-import android.R
+
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.allViews
+import androidx.core.view.children
 import androidx.fragment.app.viewModels
+import com.example.flightapplication.R
 import com.example.flightapplication.databinding.FragmentListBinding
 import com.example.flightapplication.ui.base.BaseFragment
 import com.example.flightapplication.ui.list.adapters.DaysAdapter
@@ -16,6 +22,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -37,14 +47,19 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
         viewModel.flightData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
                 is Resource.Success -> {
-                    Log.e("eee data",it.data.toString())
-
                     TabLayoutMediator(binding.tabLayout,binding.viewPager){tab,position->
                         if (position==0){
                             tab.text="Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
                         }
                         if (position==1){
-                            tab.text="28 Haz Sal \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
+                           // tab.icon=context?.getDrawable(R.drawable.ic_date)
+                            val stringDate = it.data?.data?.searchParameters?.departureDate
+                            val sdf = SimpleDateFormat("dd MMM EEE", Locale("tr"))
+                            val sdfJson= SimpleDateFormat("yyyy-MM-dd")
+                            val date=sdfJson.parse(stringDate)
+                            System.out.println(sdf.format(date))
+                            tab.text="${sdf.format(date)} \n ${it.data?.data?.filterBoundaries?.departurePrice?.min} TL"
+
                         }
                         if (position==2){
                             tab.text="Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"

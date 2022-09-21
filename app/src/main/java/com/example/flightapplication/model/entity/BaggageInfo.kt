@@ -10,10 +10,16 @@ data class BaggageInfo(
     val firstBaggageCollection: List<FirstBaggageCollection>
 ){
     fun getWeight():String{
-        if (carryOn.allowance==8){
-            return "El Bagajı"
+
+        if (firstBaggageCollection.isNullOrEmpty().not()){
+            if (firstBaggageCollection.getOrNull(0)?.allowance!=8){
+                return "${firstBaggageCollection.getOrNull(0)?.allowance} ${firstBaggageCollection.getOrNull(0)?.unit}/Kişi"
+            }else{
+                return "El Bagajı"
+            }
         }else{
-            return "20 kg / kişi"
+            return "El Bagajı"
         }
+
     }
 }

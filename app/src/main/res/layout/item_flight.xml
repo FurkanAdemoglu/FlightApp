@@ -111,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"
+                android:textStyle="bold"
                 android:text="@{segment.departureDatetime.time}"
                 tools:text="08:40" />
 
@@ -136,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.33"
+            android:textStyle="bold"
             android:text="@{departure.priceBreakdown.price()}"
             android:drawableEnd="@drawable/ic_arrow_forward"
             tools:text="1.4449,99 TL" />
