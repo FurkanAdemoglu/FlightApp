@@ -56,13 +56,16 @@ class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departu
             val filteredAirline=viewModel.airlines.filter { airline ->
                 item.segments.getOrNull(0)?.marketingAirline==airline.code
             }
-
+            val validImageString=filteredAirline.getOrNull(0)?.image?.replace("\\/", "/")
             Glide.with(binding.airlineImage.context)
-                .load(filteredAirline.getOrNull(0)?.image)
+                .load(validImageString)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.airlineImage)
-            binding.airlineName.text=filteredAirline.getOrNull(0)?.name
+
+            filteredAirline.getOrNull(0)?.unicodeToTurkish()
+
+            binding.airlineName.text=filteredAirline.getOrNull(0)?.unicodeToTurkishForFlight(filteredAirline.getOrNull(0)?.name?:"")
         }
     }
 }

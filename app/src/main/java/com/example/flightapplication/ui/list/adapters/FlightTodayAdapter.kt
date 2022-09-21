@@ -62,7 +62,7 @@ class FlightTodayAdapter(val viewModel: ListViewModel) : ListAdapter<Departure,F
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.airlineImage)
-            binding.airlineName.text=filteredAirline.getOrNull(0)?.name
+            binding.airlineName.text=filteredAirline.getOrNull(0)?.unicodeToTurkishForFlight(filteredAirline.getOrNull(0)?.name?:"")
         }
     }
 }

@@ -42,7 +42,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
                             tab.text="Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
                         }
                         if (position==1){
-                            tab.text="28 Haz Sal"
+                            tab.text="28 Haz Sal \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
                         }
                         if (position==2){
                             tab.text="Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"
