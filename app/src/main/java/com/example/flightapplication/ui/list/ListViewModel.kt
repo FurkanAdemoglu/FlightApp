@@ -21,6 +21,9 @@ class ListViewModel @Inject constructor(): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     val flightData=MutableLiveData<Resource<Response>>()
 
+    val testLiveData=MutableLiveData<Response>()
+    val testLiveDataFail = MutableLiveData<Response?>()
+
     val airlines= mutableListOf<Airline>()
 
     fun getFlights(context: Context){
@@ -31,10 +34,12 @@ class ListViewModel @Inject constructor(): ViewModel() {
             .subscribe(
                 {c->
                     flightData.postValue(Resource.Success(c))
+                    testLiveData.postValue(c)
                     Log.e("eee dataPupular",c.toString())
                 },
                 {x->
                     flightData.postValue(Resource.Error(x.message.toString(),null))
+                    testLiveDataFail.postValue(null)
                     Log.e("eee onError", x?.message.toString())
                 })
 
