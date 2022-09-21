@@ -76,7 +76,7 @@ class ListViewModelTest {
 
 
     @Test
-    fun getAnimalFailure(context: Context){
+    fun getFlightsFailure(context: Context){
 
         val testSingle = Observable.error<Response>(Throwable())
         Mockito.`when`(mockDataRepository.getFlightsFromAsset(context)).thenReturn(testSingle)
