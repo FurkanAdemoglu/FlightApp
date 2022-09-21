@@ -13,7 +13,7 @@ import com.example.flightapplication.databinding.ItemFlightBinding
 import com.example.flightapplication.model.entity.Departure
 import com.example.flightapplication.ui.list.ListViewModel
 
-class FlightTodayAdapter(val viewModel: ListViewModel) : ListAdapter<Departure,FlightTodayAdapter.FlightViewHolder>(DIFF_UTIL) {
+class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departure, FlightTomorrowAdapter.FlightViewHolder>(DIFF_UTIL) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlightViewHolder {
@@ -35,7 +35,7 @@ class FlightTodayAdapter(val viewModel: ListViewModel) : ListAdapter<Departure,F
         return currentList.size
     }
     companion object{
-        val DIFF_UTIL= object :DiffUtil.ItemCallback<Departure>(){
+        val DIFF_UTIL= object : DiffUtil.ItemCallback<Departure>(){
             override fun areItemsTheSame(oldItem: Departure, newItem: Departure): Boolean {
                 return false
             }
@@ -46,8 +46,9 @@ class FlightTodayAdapter(val viewModel: ListViewModel) : ListAdapter<Departure,F
         }
     }
 
-    class FlightViewHolder(val binding:ItemFlightBinding,val viewModel: ListViewModel):RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Departure){
+    class FlightViewHolder(val binding: ItemFlightBinding, val viewModel: ListViewModel):
+        RecyclerView.ViewHolder(binding.root){
+        fun bind(item: Departure){
             binding.segment=item.segments.getOrNull(0)
             binding.departure=item
             binding.baggageInfo=item.infos.baggageİnfo
@@ -55,10 +56,9 @@ class FlightTodayAdapter(val viewModel: ListViewModel) : ListAdapter<Departure,F
             val filteredAirline=viewModel.airlines.filter { airline ->
                 item.segments.getOrNull(0)?.marketingAirline==airline.code
             }
-          binding.airline=filteredAirline.getOrNull(0)
-            val validImageString=filteredAirline.getOrNull(0)?.image?.replace("\\/", "/")
+
             Glide.with(binding.airlineImage.context)
-                .load(validImageString)
+                .load(filteredAirline.getOrNull(0)?.image)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.airlineImage)

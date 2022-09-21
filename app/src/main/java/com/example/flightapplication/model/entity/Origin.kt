@@ -22,11 +22,26 @@ data class Origin(
     val slug: String
 ){
     fun unicodeToTurkish():String{
-        if ( cityName.contains("\u011f")) cityName.replace("\u011f","ğ")
-        if ( cityName.contains("\u011e")) cityName.replace("\u011e","Ğ")
-        if ( cityName.contains("\u0131")) cityName.replace("\u0131","ı")
-        if ( cityName.contains( "\u0130")) cityName.replace("\u0130","İ")
-        if ( cityName.contains("\u00f6")) cityName.replace("\u00f6","ö")
+        if ( cityName.contains("\u011f")) {
+            val validCityName=cityName.replace("\u011f","ğ")
+            return validCityName
+        }
+        if ( cityName.contains("\u011e")) {
+            val validCityName= cityName.replace("\u011e","Ğ")
+            return validCityName
+        }
+        if ( cityName.contains("\u0131")) {
+            val validCityName= cityName.replace("\u0131","ı")
+            return validCityName
+        }
+        if ( cityName.contains( "\\u0130")){
+            val validCityName=cityName.replace("\\u0130","İ")
+            return validCityName
+        }
+        if ( cityName.contains("\u00f6")) {
+            val validCityName = cityName.replace("\u00f6","ö")
+            return validCityName
+        }
 
         return cityName
     }

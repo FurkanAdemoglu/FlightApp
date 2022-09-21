@@ -15,6 +15,9 @@
         <variable
             name="baggageInfo"
             type="com.example.flightapplication.model.entity.BaggageInfo" />
+        <variable
+            name="airline"
+            type="com.example.flightapplication.model.entity.Airline" />
 
     </data>
 
@@ -44,8 +47,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/airline_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:padding="6dp"
             tools:src="@drawable/ic_arrow_back" />
 

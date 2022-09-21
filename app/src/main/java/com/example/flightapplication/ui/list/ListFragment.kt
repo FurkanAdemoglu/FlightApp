@@ -27,8 +27,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
         val adapter= DaysAdapter(this)
         viewModel.getFlights(requireContext())
-        binding.tabLayout.getTabAt(1)?.select()
-    binding.viewPager.adapter=adapter
+        binding.tabLayout.getTabAt(2)?.select()
+        binding.viewPager.adapter=adapter
 
 
 
@@ -36,7 +36,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             when (it) {
                 is Resource.Success -> {
                     Log.e("eee data",it.data.toString())
-                    Constant.dialog.dismiss()
+
                     TabLayoutMediator(binding.tabLayout,binding.viewPager){tab,position->
                         if (position==0){
                             tab.text="Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
@@ -48,15 +48,17 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
                             tab.text="Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"
                         }
                     }.attach()
+                    Constant.dialog.dismiss()
                     binding.origin=it.data?.data?.searchParameters?.origin
                     binding.destination=it.data?.data?.searchParameters?.destination
+                    binding.searchParameters=it?.data?.data?.searchParameters
                 }
                 is Resource.Error -> {
                     Log.e("eeee Error",it.message.toString())
                     Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {
-                    Constant.showDialog(requireActivity())
+
                 }
             }
         })

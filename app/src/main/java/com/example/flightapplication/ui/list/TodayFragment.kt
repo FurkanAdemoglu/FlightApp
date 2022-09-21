@@ -42,7 +42,7 @@ class TodayFragment : BaseFragment<FragmentTodayBinding>(FragmentTodayBinding::i
                     Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {
-                    Constant.showDialog(requireActivity())
+                   // Constant.showDialog(requireActivity())
                 }
             }
         })
