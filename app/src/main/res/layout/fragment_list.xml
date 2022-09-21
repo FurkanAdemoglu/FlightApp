@@ -137,6 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
+        app:tabInlineLabel="true"
         app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3"
@@ -152,6 +153,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_date"
             />
 
         <com.google.android.material.tabs.TabItem

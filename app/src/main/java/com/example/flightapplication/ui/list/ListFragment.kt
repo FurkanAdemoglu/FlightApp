@@ -4,6 +4,7 @@ import android.R
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import com.example.flightapplication.databinding.FragmentListBinding
 import com.example.flightapplication.ui.base.BaseFragment
@@ -13,6 +14,7 @@ import com.example.flightapplication.util.Resource
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 
@@ -27,7 +29,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
         val adapter= DaysAdapter(this)
         viewModel.getFlights(requireContext())
-        binding.tabLayout.getTabAt(2)?.select()
+
         binding.viewPager.adapter=adapter
 
 
@@ -48,6 +50,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
                             tab.text="Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"
                         }
                     }.attach()
+                    tabLayout.setScrollPosition(1,0f,true);
+                    viewPager.setCurrentItem(1);
                     Constant.dialog.dismiss()
                     binding.origin=it.data?.data?.searchParameters?.origin
                     binding.destination=it.data?.data?.searchParameters?.destination
