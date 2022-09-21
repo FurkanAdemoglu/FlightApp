@@ -41,9 +41,6 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
         viewModel.getFlights(requireContext())
 
         binding.viewPager.adapter=adapter
-
-
-
         viewModel.flightData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
                 is Resource.Success -> {
@@ -52,13 +49,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
                             tab.text="Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
                         }
                         if (position==1){
-                           // tab.icon=context?.getDrawable(R.drawable.ic_date)
-                            val stringDate = it.data?.data?.searchParameters?.departureDate
-                            val sdf = SimpleDateFormat("dd MMM EEE", Locale("tr"))
-                            val sdfJson= SimpleDateFormat("yyyy-MM-dd")
-                            val date=sdfJson.parse(stringDate)
-                            System.out.println(sdf.format(date))
-                            tab.text="${sdf.format(date)} \n ${it.data?.data?.filterBoundaries?.departurePrice?.min} TL"
+                            val date=decodeDate(it.data?.data?.searchParameters?.departureDate)
+                            tab.text="${date} \n ${it.data?.data?.filterBoundaries?.departurePrice?.min} TL"
 
                         }
                         if (position==2){
@@ -77,9 +69,16 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
                     Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {
-
                 }
             }
         })
+    }
+    fun decodeDate(date:String?):String{
+        val stringDate = date
+        val sdf = SimpleDateFormat("dd MMM EEE", Locale("tr"))
+        val sdfJson= SimpleDateFormat("yyyy-MM-dd")
+        val date=sdfJson.parse(stringDate)
+        System.out.println(sdf.format(date))
+        return sdf.format(date)
     }
 }
