@@ -37,35 +37,38 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter= DaysAdapter(this)
+        val adapter = DaysAdapter(this)
         viewModel.getFlights(requireContext())
 
-        binding.viewPager.adapter=adapter
+        binding.viewPager.adapter = adapter
         viewModel.flightData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
                 is Resource.Success -> {
-                    TabLayoutMediator(binding.tabLayout,binding.viewPager){tab,position->
-                        if (position==0){
-                            tab.text="Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
+                    TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                        if (position == 0) {
+                            tab.text =
+                                "Önceki Gün \n ${it.data?.data?.priceHistory?.departure?.previousDayPrice} TL"
                         }
-                        if (position==1){
-                            val date=decodeDate(it.data?.data?.searchParameters?.departureDate)
-                            tab.text="${date} \n ${it.data?.data?.filterBoundaries?.departurePrice?.min} TL"
+                        if (position == 1) {
+                            val date = decodeDate(it.data?.data?.searchParameters?.departureDate)
+                            tab.text =
+                                "${date} \n ${it.data?.data?.filterBoundaries?.departurePrice?.min} TL"
 
                         }
-                        if (position==2){
-                            tab.text="Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"
+                        if (position == 2) {
+                            tab.text =
+                                "Sonraki Gün \n ${it.data?.data?.priceHistory?.departure?.nextDayPrice} TL"
                         }
                     }.attach()
-                    tabLayout.setScrollPosition(1,0f,true);
+                    tabLayout.setScrollPosition(1, 0f, true);
                     viewPager.setCurrentItem(1);
                     Constant.dialog.dismiss()
-                    binding.origin=it.data?.data?.searchParameters?.origin
-                    binding.destination=it.data?.data?.searchParameters?.destination
-                    binding.searchParameters=it?.data?.data?.searchParameters
+                    binding.origin = it.data?.data?.searchParameters?.origin
+                    binding.destination = it.data?.data?.searchParameters?.destination
+                    binding.searchParameters = it?.data?.data?.searchParameters
                 }
                 is Resource.Error -> {
-                    Log.e("eeee Error",it.message.toString())
+                    Log.e("eeee Error", it.message.toString())
                     Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {
@@ -73,11 +76,12 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
             }
         })
     }
-    fun decodeDate(date:String?):String{
+
+    fun decodeDate(date: String?): String {
         val stringDate = date
         val sdf = SimpleDateFormat("dd MMM EEE", Locale("tr"))
-        val sdfJson= SimpleDateFormat("yyyy-MM-dd")
-        val date=sdfJson.parse(stringDate)
+        val sdfJson = SimpleDateFormat("yyyy-MM-dd")
+        val date = sdfJson.parse(stringDate)
         System.out.println(sdf.format(date))
         return sdf.format(date)
     }

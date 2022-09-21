@@ -10,12 +10,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxjava3.core.Observable
 
 class FlightListRepository {
-    fun getFlightsFromAsset(context:Context): Observable<Response> {
-        val jsonString = context.assets.open("enuygun_flight_search.json").bufferedReader().use { it.readText() }
+    fun getFlightsFromAsset(context: Context): Observable<Response> {
+        val jsonString =
+            context.assets.open("enuygun_flight_search.json").bufferedReader().use { it.readText() }
         val listPersonType = object : TypeToken<Response>() {}.type
         val gson = Gson()
         var persons: Response = gson.fromJson(jsonString, listPersonType)
-         //Log.i("data", "> Item $idx:\n$person")
-        return  Observable.just(persons)
+        //Log.i("data", "> Item $idx:\n$person")
+        return Observable.just(persons)
     }
 }

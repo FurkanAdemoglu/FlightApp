@@ -12,7 +12,7 @@ class DaysAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     }
 
     override fun createFragment(position: Int): Fragment {
-        when(position){
+        when (position) {
             0 -> return YesterdayFragment()
             1 -> return TodayFragment()
             2 -> return TomorrowFragment()

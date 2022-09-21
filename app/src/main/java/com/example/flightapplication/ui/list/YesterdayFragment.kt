@@ -13,7 +13,8 @@ import com.example.flightapplication.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class YesterdayFragment : BaseFragment<FragmentYesterdayBinding>(FragmentYesterdayBinding::inflate)  {
+class YesterdayFragment :
+    BaseFragment<FragmentYesterdayBinding>(FragmentYesterdayBinding::inflate) {
     private val viewModel: ListViewModel by viewModels()
 
     private val flightAdapter by lazy { FlightTomorrowAdapter(viewModel) }
@@ -21,34 +22,32 @@ class YesterdayFragment : BaseFragment<FragmentYesterdayBinding>(FragmentYesterd
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getFlights(requireContext())
-        binding.rvYesterday.adapter=flightAdapter
+        binding.rvYesterday.adapter = flightAdapter
         viewModel.flightData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
                 is Resource.Success -> {
-                    Log.e("eee data",it.data.toString())
                     Constant.dialog.dismiss()
-                    it.data?.data?.airlines?.forEach {airline->
+                    it.data?.data?.airlines?.forEach { airline ->
                         viewModel.airlines.add(airline)
                     }
 
-                    val filteredDeparture=it.data?.data?.flights?.departure?.filter { departure ->
-                        val segment=departure.segments.filter { segment ->
-                            segment.departureDatetime.date=="27.06.2022"
+                    val filteredDeparture = it.data?.data?.flights?.departure?.filter { departure ->
+                        val segment = departure.segments.filter { segment ->
+                            segment.departureDatetime.date == "27.06.2022"
                         }
                         segment.isNullOrEmpty().not()
                     }
-                    if (filteredDeparture.isNullOrEmpty()){
-                        binding.emptyFlightText.visibility=View.VISIBLE
-                        binding.rvYesterday.visibility=View.GONE
-                    }else{
-                        binding.emptyFlightText.visibility=View.GONE
-                        binding.rvYesterday.visibility=View.VISIBLE
+                    if (filteredDeparture.isNullOrEmpty()) {
+                        binding.emptyFlightText.visibility = View.VISIBLE
+                        binding.rvYesterday.visibility = View.GONE
+                    } else {
+                        binding.emptyFlightText.visibility = View.GONE
+                        binding.rvYesterday.visibility = View.VISIBLE
                         flightAdapter.submitList(filteredDeparture)
                     }
 
                 }
                 is Resource.Error -> {
-                    Log.e("eeee Error",it.message.toString())
                     Constant.dialog.dismiss()
                 }
                 is Resource.Loading -> {

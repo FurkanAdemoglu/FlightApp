@@ -13,7 +13,8 @@ import com.example.flightapplication.databinding.ItemFlightBinding
 import com.example.flightapplication.model.entity.Departure
 import com.example.flightapplication.ui.list.ListViewModel
 
-class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departure, FlightTomorrowAdapter.FlightViewHolder>(DIFF_UTIL) {
+class FlightTomorrowAdapter(val viewModel: ListViewModel) :
+    ListAdapter<Departure, FlightTomorrowAdapter.FlightViewHolder>(DIFF_UTIL) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlightViewHolder {
@@ -24,7 +25,7 @@ class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departu
             parent,
             false
         )
-        return FlightViewHolder(binding,viewModel)
+        return FlightViewHolder(binding, viewModel)
     }
 
     override fun onBindViewHolder(holder: FlightViewHolder, position: Int) {
@@ -34,8 +35,9 @@ class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departu
     override fun getItemCount(): Int {
         return currentList.size
     }
-    companion object{
-        val DIFF_UTIL= object : DiffUtil.ItemCallback<Departure>(){
+
+    companion object {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<Departure>() {
             override fun areItemsTheSame(oldItem: Departure, newItem: Departure): Boolean {
                 return false
             }
@@ -46,17 +48,17 @@ class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departu
         }
     }
 
-    class FlightViewHolder(val binding: ItemFlightBinding, val viewModel: ListViewModel):
-        RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Departure){
-            binding.segment=item.segments.getOrNull(0)
-            binding.departure=item
-            binding.baggageInfo=item.infos.baggageİnfo
+    class FlightViewHolder(val binding: ItemFlightBinding, val viewModel: ListViewModel) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Departure) {
+            binding.segment = item.segments.getOrNull(0)
+            binding.departure = item
+            binding.baggageInfo = item.infos.baggageİnfo
 
-            val filteredAirline=viewModel.airlines.filter { airline ->
-                item.segments.getOrNull(0)?.marketingAirline==airline.code
+            val filteredAirline = viewModel.airlines.filter { airline ->
+                item.segments.getOrNull(0)?.marketingAirline == airline.code
             }
-            val validImageString=filteredAirline.getOrNull(0)?.image?.replace("\\/", "/")
+            val validImageString = filteredAirline.getOrNull(0)?.image?.replace("\\/", "/")
             Glide.with(binding.airlineImage.context)
                 .load(validImageString)
                 .fitCenter()
@@ -65,7 +67,8 @@ class FlightTomorrowAdapter (val viewModel: ListViewModel) : ListAdapter<Departu
 
             filteredAirline.getOrNull(0)?.unicodeToTurkish()
 
-            binding.airlineName.text=filteredAirline.getOrNull(0)?.unicodeToTurkishForFlight(filteredAirline.getOrNull(0)?.name?:"")
+            binding.airlineName.text = filteredAirline.getOrNull(0)
+                ?.unicodeToTurkishForFlight(filteredAirline.getOrNull(0)?.name ?: "")
         }
     }
 }

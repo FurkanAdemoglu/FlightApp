@@ -15,32 +15,30 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(): ViewModel() {
+class ListViewModel @Inject constructor() : ViewModel() {
 
-    private val repository=FlightListRepository()
+    private val repository = FlightListRepository()
     private val compositeDisposable = CompositeDisposable()
-    val flightData=MutableLiveData<Resource<Response>>()
+    val flightData = MutableLiveData<Resource<Response>>()
 
-    val testLiveData=MutableLiveData<Response>()
+    val testLiveData = MutableLiveData<Response>()
     val testLiveDataFail = MutableLiveData<Response?>()
 
-    val airlines= mutableListOf<Airline>()
+    val airlines = mutableListOf<Airline>()
 
-    fun getFlights(context: Context){
+    fun getFlights(context: Context) {
         flightData.postValue(Resource.Loading())
         val observable = repository.getFlightsFromAsset(context)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {c->
+                { c ->
                     flightData.postValue(Resource.Success(c))
                     testLiveData.postValue(c)
-                    Log.e("eee dataPupular",c.toString())
                 },
-                {x->
-                    flightData.postValue(Resource.Error(x.message.toString(),null))
+                { x ->
+                    flightData.postValue(Resource.Error(x.message.toString(), null))
                     testLiveDataFail.postValue(null)
-                    Log.e("eee onError", x?.message.toString())
                 })
 
         compositeDisposable.add(observable)
